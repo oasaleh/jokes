@@ -113,3 +113,20 @@ export async function requireUserId(request: Request, redirectTo: string = new U
   return userId;
 }
 
+export async function register({ password, username }: LoginForm) {
+  if (!username || !password) {
+    return null;
+  }
+
+  const passwordHash = await bcrypt.hash(password, 10);
+
+  const user = await db.user.create({
+    data: {
+      username: username.toLowerCase(),
+      passwordHash,
+    },
+  });
+
+  return { id: user.id, username: user.username };
+}
+

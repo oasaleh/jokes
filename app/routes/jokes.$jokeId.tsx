@@ -1,6 +1,6 @@
 import type { LoaderArgs } from "@remix-run/node";
 import { json } from "@remix-run/node";
-import { Link, useLoaderData } from "@remix-run/react";
+import { Link, isRouteErrorResponse, useLoaderData, useParams, useRouteError } from "@remix-run/react";
 
 import { db } from "~/utils/db.server";
 
@@ -45,7 +45,9 @@ export const loader = async ({ params }: LoaderArgs) => {
   });
 
   if (!joke) {
-    return json({ message: "Joke not found" }, { status: 404 });
+    throw new Response("What a joke! Not found.", {
+      status: 404,
+    });
   }
 
   return json({ joke });
@@ -60,5 +62,16 @@ export default function JokeRoute() {
       <Link to=".">{data.joke.name} Permalink</Link>
     </div>
   );
+}
+
+export function ErrorBoundary() {
+  const error = useRouteError();
+  const { jokeId } = useParams();
+
+  if (isRouteErrorResponse(error) && error.status === 404) {
+    return <div className="error-container">Huh? What the heck is "{jokeId}"?</div>;
+  }
+
+  return <div className="error-container">There was an error loading joke by the id "${jokeId}". Sorry.</div>;
 }
 
