@@ -1,4 +1,5 @@
 import { PrismaClient } from "@prisma/client";
+import { json } from "@remix-run/node";
 
 let db: PrismaClient;
 
