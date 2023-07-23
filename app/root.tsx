@@ -1,9 +1,5 @@
 import type { LinksFunction } from "@remix-run/node";
-import {
-  Links,
-  LiveReload,
-  Outlet,
-} from "@remix-run/react";
+import { Links, LiveReload, Outlet, Scripts, ScrollRestoration } from "@remix-run/react";
 
 import globalLargeStylesUrl from "~/styles/global-large.css";
 import globalMediumStylesUrl from "~/styles/global-medium.css";
@@ -28,17 +24,17 @@ export default function App() {
     <html lang="en">
       <head>
         <meta charSet="utf-8" />
-        <meta
-          name="viewport"
-          content="width=device-width,initial-scale=1"
-        />
+        <meta name="viewport" content="width=device-width,initial-scale=1" />
         <title>Remix: So great, it's funny!</title>
         <Links />
       </head>
       <body>
         <Outlet />
+        {/* <ScrollRestoration /> */}
+        <Scripts />
         <LiveReload />
       </body>
     </html>
   );
 }
+

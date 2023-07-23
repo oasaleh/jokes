@@ -4,6 +4,7 @@ import { badRequest } from "~/utils/request.server";
 
 import { db } from "~/utils/db.server";
 import { useActionData } from "@remix-run/react";
+import { requireUserId } from "~/utils/session.server";
 
 // request is:
 // {
@@ -52,6 +53,7 @@ const validateNameLength = (name: string) => {
 };
 
 export async function action({ request }: ActionArgs) {
+  const userId = await requireUserId(request);
   const form = await request.formData();
   const content = form.get("content");
   const name = form.get("name");
@@ -62,11 +64,12 @@ export async function action({ request }: ActionArgs) {
       fields: null,
       formError: "Form not submitted correctly.",
     });
-    console.log(res);
+
     return res;
   }
 
   const fields = { content, name };
+
   const fieldErrors = {
     content: validateContentLength(content),
     name: validateNameLength(name),
@@ -83,13 +86,19 @@ export async function action({ request }: ActionArgs) {
   }
 
   // Save the joke to the database
-  const joke = await db.joke.create({ data: fields });
+  const joke = await db.joke.create({
+    data: {
+      ...fields,
+      jokesterId: userId,
+    },
+  });
 
   // Redirect to the permalink for the joke
   return redirect(`/jokes/${joke.id}`);
 }
 
 export default function NewJokeRoute() {
+  // First time this component is rendered, actionData will be undefined
   const actionData = useActionData<typeof action>();
 
   return (

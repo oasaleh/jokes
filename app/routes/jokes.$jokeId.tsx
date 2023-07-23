@@ -53,7 +53,6 @@ export const loader = async ({ params }: LoaderArgs) => {
 
 export default function JokeRoute() {
   const data = useLoaderData<typeof loader>();
-
   return (
     <div>
       <p>Here's your hilarious joke:</p>
