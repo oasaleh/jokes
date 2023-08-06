@@ -2,6 +2,7 @@ import type { LinksFunction, LoaderArgs } from "@remix-run/node";
 import { json } from "@remix-run/node";
 import { Form, Link, Outlet, useLoaderData } from "@remix-run/react";
 
+import { FaGithub } from "react-icons/fa";
 import stylesUrl from "~/styles/jokes.css";
 import { db } from "~/utils/db.server";
 import { getUser } from "~/utils/session.server";
@@ -71,9 +72,12 @@ export default function JokesRoute() {
         </div>
       </main>
       <footer className="jokes-footer">
-        <div className="container">
+        <div className="footer-nav container">
           <Link reloadDocument to="/jokes.rss">
             RSS
+          </Link>
+          <Link className="gitHubIcon" target="_blank" to="https://github.com/oasaleh/jokes">
+            <FaGithub />
           </Link>
         </div>
       </footer>
