@@ -18,16 +18,16 @@ export const links: LinksFunction = () => [
     href: globalLargeStylesUrl,
     media: "screen and (min-width: 1024px)",
   },
+  {
+    rel: "icon",
+    href: "data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🤪</text></svg>",
+  },
 ];
 
 export const meta: V2_MetaFunction = () => {
   const description = "Learn Remix and laugh at the same time!";
 
-  return [
-    { name: "description", content: description },
-    { name: "twitter:description", content: description },
-    { title: "Remix: So great, it's funny!" },
-  ];
+  return [{ name: "description", content: description }, { title: "It's funny!" }];
 };
 
 function Document({ children, title }: PropsWithChildren<{ title?: string }>) {
@@ -37,11 +37,6 @@ function Document({ children, title }: PropsWithChildren<{ title?: string }>) {
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width,initial-scale=1" />
         <meta name="keywords" content="Remix,jokes" />
-        <meta name="twitter:image" content="https://remix-jokes.lol/social.png" />
-        <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:creator" content="@remix_run" />
-        <meta name="twitter:site" content="@remix_run" />
-        <meta name="twitter:title" content="Remix Jokes" />
         <Meta />
         {title ? <title>{title}</title> : null}
         <Links />
