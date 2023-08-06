@@ -1,5 +1,5 @@
-import type { LinksFunction } from "@remix-run/node";
-import { Links, LiveReload, Outlet, isRouteErrorResponse, useRouteError } from "@remix-run/react";
+import type { LinksFunction, V2_MetaFunction } from "@remix-run/node";
+import { isRouteErrorResponse, Links, LiveReload, Meta, Outlet, Scripts, useRouteError } from "@remix-run/react";
 import type { PropsWithChildren } from "react";
 
 import globalLargeStylesUrl from "~/styles/global-large.css";
@@ -20,17 +20,35 @@ export const links: LinksFunction = () => [
   },
 ];
 
-function Document({ children, title = "Remix: So great, it's funny!" }: PropsWithChildren<{ title?: string }>) {
+export const meta: V2_MetaFunction = () => {
+  const description = "Learn Remix and laugh at the same time!";
+
+  return [
+    { name: "description", content: description },
+    { name: "twitter:description", content: description },
+    { title: "Remix: So great, it's funny!" },
+  ];
+};
+
+function Document({ children, title }: PropsWithChildren<{ title?: string }>) {
   return (
     <html lang="en">
       <head>
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width,initial-scale=1" />
-        <title>{title}</title>
+        <meta name="keywords" content="Remix,jokes" />
+        <meta name="twitter:image" content="https://remix-jokes.lol/social.png" />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:creator" content="@remix_run" />
+        <meta name="twitter:site" content="@remix_run" />
+        <meta name="twitter:title" content="Remix Jokes" />
+        <Meta />
+        {title ? <title>{title}</title> : null}
         <Links />
       </head>
       <body>
         {children}
+        <Scripts />
         <LiveReload />
       </body>
     </html>
@@ -61,7 +79,6 @@ export function ErrorBoundary() {
   }
 
   const errorMessage = error instanceof Error ? error.message : "Unknown error";
-
   return (
     <Document title="Uh-oh!">
       <div className="error-container">
@@ -71,4 +88,3 @@ export function ErrorBoundary() {
     </Document>
   );
 }
-

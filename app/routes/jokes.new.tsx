@@ -1,6 +1,7 @@
 import type { ActionArgs, LoaderArgs } from "@remix-run/node";
 import { json, redirect } from "@remix-run/node";
-import { isRouteErrorResponse, Link, useActionData, useRouteError } from "@remix-run/react";
+import { Form, isRouteErrorResponse, Link, useActionData, useNavigation, useRouteError } from "@remix-run/react";
+import JokeDisplay from "~/components/joke";
 
 import { db } from "~/utils/db.server";
 import { badRequest } from "~/utils/request.server";
@@ -63,11 +64,27 @@ export const action = async ({ request }: ActionArgs) => {
 
 export default function NewJokeRoute() {
   const actionData = useActionData<typeof action>();
+  const navigation = useNavigation();
+
+  // This is optimistic UI. While the joke is being created, we show the user the joke they just submitted but without the ability to delete it. To test this, use slow 3G connection in Network tab.
+  if (navigation.formData) {
+    const content = navigation.formData.get("content");
+    const name = navigation.formData.get("name");
+    if (
+      typeof content === "string" &&
+      typeof name === "string" &&
+      !validateJokeContent(content) &&
+      !validateJokeName(name)
+    ) {
+      return <JokeDisplay canDelete={false} isOwner={true} joke={{ name, content }} />;
+    }
+  }
 
   return (
     <div>
       <p>Add your own hilarious joke</p>
-      <form method="post">
+
+      <Form method="post">
         <div>
           <label>
             Name:{" "}
@@ -111,7 +128,7 @@ export default function NewJokeRoute() {
             Add
           </button>
         </div>
-      </form>
+      </Form>
     </div>
   );
 }
@@ -130,4 +147,3 @@ export function ErrorBoundary() {
 
   return <div className="error-container">Something unexpected went wrong. Sorry about that.</div>;
 }
-
