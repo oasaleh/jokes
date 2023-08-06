@@ -1,6 +1,9 @@
-# Welcome to Remix!
+# Welcome to J🤪kes!
+You can read, submit and share jokes!
 
-- [Remix Docs](https://remix.run/docs)
+This app was bootstrapped using [Remix](https://remix.run/) framework.
+
+[![-----------------------------------------------------](https://raw.githubusercontent.com/andreasbm/readme/master/assets/lines/colored.png)](#development)
 
 ## Development
 
@@ -11,6 +14,9 @@ npm run dev
 ```
 
 This starts your app in development mode, rebuilding assets on file changes.
+
+
+[![-----------------------------------------------------](https://raw.githubusercontent.com/andreasbm/readme/master/assets/lines/colored.png)](#deployment)
 
 ## Deployment
 
@@ -48,12 +54,20 @@ Most importantly, this means everything in the `app/` directory, but if you've f
 
 ```sh
 cd ..
+
+[![-----------------------------------------------------](https://raw.githubusercontent.com/andreasbm/readme/master/assets/lines/colored.png)](#create-a-new-project-and-pick-a-pre-configured-host)
+
 # create a new project, and pick a pre-configured host
 npx create-remix@latest
 cd my-new-remix-app
+
+[![-----------------------------------------------------](https://raw.githubusercontent.com/andreasbm/readme/master/assets/lines/colored.png)](#remove-the-new-projects-app-not-the-old-one)
+
 # remove the new project's app (not the old one!)
 rm -rf app
+
+[![-----------------------------------------------------](https://raw.githubusercontent.com/andreasbm/readme/master/assets/lines/colored.png)](#copy-your-app-over)
+
 # copy your app over
 cp -R ../my-old-remix-app/app app
 ```
-# jokes
