@@ -27,14 +27,3 @@ h6 {
 .container {
   --gutter: 40px;
 }
-
-.footer-nav {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  gap: 1rem;
-}
-.gitHubIcon {
-  display: flex;
-  flex-direction: column;
-}
